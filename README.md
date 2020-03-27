@@ -40,7 +40,7 @@
 
 道具：tool
 
-道具（Tool）类：Chen、 Dai
+道具（Tool）类：Chen、Dai
 
 道具名：name
 
