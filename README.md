@@ -53,3 +53,15 @@
 攻击力度：strength
 
 猫狗实体：cat、dog
+
+
+
+## 项目提交注意事项
+
+第一次拉取项目时请使用<strong>git clone</strong>
+
+之后再提交前请使用<strong>git pull</strong>将远程仓库更新同步到本地并合并分支后
+
+再使用<strong>git push</strong>提交
+
+##### ！！！千万不要强制提交，会导致远程仓库代码错误。
