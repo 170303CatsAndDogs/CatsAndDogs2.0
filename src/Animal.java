@@ -12,7 +12,7 @@ public class Animal {
     private Tool tool;
     // 名字
     private String name;
-    //初始攻击力
+    // 初始攻击力
     public static final int BASE_ATK = 10;
 
     // Constructors
@@ -64,7 +64,7 @@ public class Animal {
 
     // 攻击
     public int attack(Animal animal, int atk) {
-        if (animal == null) {
+        if (animal == null || atk < 0) {
             return -1;
         }
         int res = animal.getHP() - atk;
