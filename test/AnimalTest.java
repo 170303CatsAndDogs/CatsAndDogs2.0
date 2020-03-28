@@ -74,4 +74,24 @@ public class AnimalTest {
         assertEquals(-1, status, 0.01);
     }
 
+    @Category(EPTest.class)
+    @Test
+    public void attackTestEP1() {
+        attacker.attack(defender, -50);
+        assertEquals(100, defender.getHP(), 0.01);
+    }
+
+    @Category(EPTest.class)
+    @Test
+    public void attackTestEP2() {
+        attacker.attack(defender, 50);
+        assertEquals(50, defender.getHP(), 0.01);
+    }
+
+    @Category(EPTest.class)
+    @Test
+    public void attackTestEP3() {
+        attacker.attack(defender, 150);
+        assertEquals(0, defender.getHP(), 0.01);
+    }
 }
