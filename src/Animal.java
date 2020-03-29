@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 动物类
  * */
@@ -9,7 +12,7 @@ public class Animal {
     // 攻击力
     private int ATK;
     // 工具
-    private Tool tool;
+    private List<Tool> tool;
     // 名字
     private String name;
     // 初始攻击力
@@ -19,14 +22,17 @@ public class Animal {
     public Animal() {
         this.ATK = BASE_ATK;
         this.HP = 100;
-        this.tool = new Tool();
+        this.tool = new ArrayList<Tool>();
+        //初始时拥有一个双倍攻击力的道具
+        this.tool.add(new Tool("doubleAttackPower"));
     }
 
     public Animal(String name) {
         this.name = name;
         this.ATK = BASE_ATK;
         this.HP = 100;
-        this.tool = new Tool();
+        this.tool = new ArrayList<Tool>();
+
     }
 
     // getters and setters
@@ -46,11 +52,11 @@ public class Animal {
         this.ATK = ATK;
     }
 
-    public Tool getTool() {
+    public List<Tool> getTool() {
         return tool;
     }
 
-    public void setTool(Tool tool) {
+    public void setTool(List<Tool> tool) {
         this.tool = tool;
     }
 
@@ -79,13 +85,18 @@ public class Animal {
 
     // 使用道具(两倍攻击力效果一回合)
     public int useTool() {
-        int num = this.tool.getNumber();
+        //通过tool集合长度判断道具数是否为零
+        int num = this.tool.size();
         if (num == 0) {
             System.out.println("道具数为0！");
             return -1;
         }
+        //使用道具后的效果实现，并打印出来
         this.ATK = BASE_ATK * 2;
-        this.tool.setNumber(num - 1);
+        System.out.println(this.name+this.tool.get(0).getLabel());
+        //删除使用过的道具，在版本一中暂时用remove(0)来实现
+        this.tool.remove(0);
+        //this.tool.size(num - 1);
         return 0;
     }
 

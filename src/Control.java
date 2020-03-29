@@ -96,7 +96,7 @@ public class Control {
     public void output(){
         System.out.println("Cat                                                 Dog");
         System.out.println("HP:" + this.cat.getHP() +"                                              Dog:" + this.dog.getHP());
-        System.out.println("道具数:" + this.cat.getTool().getNumber() +"                                             道具数:" + this.dog.getTool().getNumber());
+        System.out.println("道具数:" + this.cat.getTool().size() +"                                             道具数:" + this.dog.getTool().size());
     }
 
     public void animalAtk(Scanner sc){
