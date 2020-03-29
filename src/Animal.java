@@ -1,7 +1,6 @@
 /**
  * 动物类
  * */
-
 public class Animal {
 
     // 生命值
@@ -15,7 +14,9 @@ public class Animal {
     // 初始攻击力
     public static final int BASE_ATK = 10;
 
-    // Constructors
+    /**
+     * Constructors
+     */
     public Animal() {
         this.ATK = BASE_ATK;
         this.HP = 100;
@@ -29,7 +30,9 @@ public class Animal {
         this.tool = new Tool();
     }
 
-    // getters and setters
+    /**
+     * getters and setters
+     */
     public int getHP() {
         return HP;
     }
@@ -62,7 +65,12 @@ public class Animal {
         this.name = name;
     }
 
-    // 攻击
+    /**
+     * 动物攻击
+     * @param animal 被攻击的动物
+     * @param atk 攻击力
+     * @return 攻击成功返回0，否则返回-1
+     */
     public int attack(Animal animal, int atk) {
         if (animal == null || atk < 0) {
             return -1;
@@ -77,7 +85,10 @@ public class Animal {
         return 0;
     }
 
-    // 使用道具(两倍攻击力效果一回合)
+    /**
+     * 使用道具(两倍攻击力效果一回合)
+     * @return 使用成功返回0，否则返回-1
+     */
     public int useTool() {
         int num = this.tool.getNumber();
         if (num == 0) {
@@ -89,7 +100,9 @@ public class Animal {
         return 0;
     }
 
-    // 道具效果结束，攻击力变为10
+    /**
+     * 道具效果结束，攻击力变为10
+     */
     public void endUsingTool() {
         this.ATK = BASE_ATK;
     }
