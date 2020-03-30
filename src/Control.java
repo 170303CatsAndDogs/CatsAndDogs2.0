@@ -1,4 +1,7 @@
+
+
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 
 /**
@@ -41,15 +44,21 @@ public class Control {
 
 
     public Control(){
-        this.cat = new Animal();
-        this.dog = new Animal();
+        this.cat = new Animal("cat");
+        this.dog = new Animal("dog");
         this.strength = 0;
         this.over = false;
         this.round = 1;
+        this.operation = TOOLOP;
+        this.roundOwner = 0;
     }
 
     public void setRoundOwner(int roundOwner) {
         this.roundOwner = roundOwner;
+    }
+
+    public int getRoundOwner() {
+        return roundOwner;
     }
 
     public int getRound() {
@@ -93,34 +102,80 @@ public class Control {
         return dog;
     }
 
+    public static boolean isNumeric(String str){
+        if(!str.isEmpty()){
+            for (int i = str.length();--i>=0;){
+                if (!Character.isDigit(str.charAt(i))){
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
     public void output(){
         System.out.println("Cat                                                 Dog");
         System.out.println("HP:" + this.cat.getHP() +"                                              Dog:" + this.dog.getHP());
         System.out.println("道具数:" + this.cat.getTool().size() +"                                             道具数:" + this.dog.getTool().size());
     }
 
-    public void animalAtk(Scanner sc){
-
-        System.out.println("猫猫的回合，请输入猫猫的攻击力度(0~10): ");
-        int strength = sc.nextInt();
-        while (strength < MINSTRENGTH || strength > MAXSTRENGTH){
-            System.out.println("攻击力度有误，只能输入0~10");
-            strength=sc.nextInt();
+    public void play(){
+        while (!this.over){
+            System.out.println("ROUND  " + this.getRound());
+            this.setRound(this.getRound()+1);
+            this.output();
+            System.out.println("猫猫的回合  go!");
+            this.getInput();
+            this.useTool();
+            this.getInput();
+            this.attack();
+            this.cat.endUsingTool();
+            this.gameOver();
+            if(over){ break; }
+            this.changeRound();
+            System.out.println("狗狗的回合  go!");
+            this.getInput();
+            this.useTool();
+            this.getInput();
+            this.attack();
+            this.dog.endUsingTool();
+            this.gameOver();
+            this.changeRound();
+            System.out.println("==========================================================");
         }
-        this.setStrength(strength);
-        if(this.strength >= MINHITSTRENGTH && this.strength<=MAXHITSTRENGTH){
-            this.dog.setHP(this.dog.getHP()-this.cat.getATK());
-        }
-        this.gameOver();
     }
 
-    public void gameOver(){
+    public int attack(){
+        if(this.getStrength()>=MINHITSTRENGTH && this.getStrength()<=MAXHITSTRENGTH){
+            if(this.roundOwner == 0){
+                this.cat.attack(this.dog,cat.getATK());
+                return 0;
+            }else if(this.roundOwner == 1){
+                this.dog.attack(this.cat,dog.getATK());
+                return 1;
+            }else{
+                System.out.println("error");
+                return -1;
+            }
+        }else{
+            System.out.println("攻击没有命中");
+            return 2;
+        }
+    }
+
+    public int gameOver(){
         if(this.dog.getHP()<=0){
             this.over = true;
+            System.out.println("Cat WIN");
+            return 0;
         }
         if(this.cat.getHP()<=0){
             this.over = true;
+            System.out.println("Dog WIN");
+            return 1;
         }
+        return -1;
     }
 
 
@@ -130,7 +185,7 @@ public class Control {
      * @return the int
      */
     public int getInput(){
-//        Scanner scanner= new Scanner(System.in);
+        Scanner scanner= new Scanner(System.in);
         if(this.operation == TOOLOP){
             System.out.println("请选择你的操作（输入操作前的数字）");
             System.out.println("1.不使用道具");
@@ -139,22 +194,48 @@ public class Control {
 //            System.out.println("3.使用道具2");
 //            System.out.println("4.使用道具3");
 //            System.out.println("5.使用道具4");
-//            this.setOperationNum(scanner.nextInt());
-            if(this.operationNum <= TOOLOPHIGHBORDER && this.operationNum >= TOOLOPLOWBORDER){
-                this.setOperation(ATKOP);
-                return this.operationNum;
+
+            String index;
+            int ioperationNum;
+            while (true){
+                index = scanner.nextLine();
+                if(isNumeric(index)){
+                    ioperationNum = Integer.parseInt(index);
+                    if(ioperationNum <= TOOLOPHIGHBORDER && ioperationNum >= TOOLOPLOWBORDER){
+                        this.setOperationNum(ioperationNum);
+                        this.setOperation(ATKOP);
+                        return this.operationNum;
+                    }else{
+                        System.out.println("1选择道具有误，只能输入1或者2");
+                    }
+                }else {
+                    System.out.println("选择道具有误，只能输入1或者2");
+                }
             }
+
         }
-        else if(this.operation == ATKOP){
-            System.out.println("请输入你的攻击力度（0-10）");
-//            this.setOperationNum(scanner.nextInt());
-            if(this.strength <= MAXSTRENGTH && this.strength >= MINSTRENGTH){
-                this.setOperation(TOOLOP);
-                return this.strength;
+        else if(this.operation == ATKOP) {
+            System.out.println("请输入你的攻击力度（0-10的整数）");
+            String iindex;
+            int istrength;
+            while (true){
+                iindex = scanner.nextLine();
+                if(isNumeric(iindex)){
+                    istrength = Integer.parseInt(iindex);
+                    if(istrength <= MAXSTRENGTH && istrength >= MINSTRENGTH){
+                        this.setStrength(istrength);
+                        this.setOperation(TOOLOP);
+                        return this.strength;
+                    }else{
+                        System.out.println("输入力度不在正确范围内，请重新输入");
+                    }
+                }else {
+                    System.out.println("输入力度不在正确范围内，请重新输入");
+                }
             }
+        }else{
+            return -1;
         }
-        System.out.println("输入不在正确范围内，请重新输入");
-        return -1;
     }
 
     public int useTool(){
@@ -175,6 +256,7 @@ public class Control {
         this.setRoundOwner((this.roundOwner + 1) % 2);
     }
 
+
     public void setInput(int input){
         if(this.operation == TOOLOP){
             this.setOperationNum(input);
@@ -186,24 +268,7 @@ public class Control {
     }
 
     public static void main(String[] args){
-//        Scanner sc = new Scanner(System.in);
-//        while (true){
-//            System.out.println("ROUND  " + control.getRound());
-//            control.setRound(control.getRound()+1);
-//            control.output();
-//            control.animalAtk(sc);
-//            control.output();
-//            if(control.getOver()){
-//                System.out.println("Cat WIN");
-//                break;
-//            }
-//            control.animalAtk(sc);
-//            control.output();
-//            if(control.getOver()){
-//                System.out.println("Dog WIN");
-//                break;
-//            }
-//            System.out.println("==========================================================");
-//        }
+        Control control = new Control();
+        control.play();
     }
 }

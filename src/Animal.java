@@ -33,6 +33,8 @@ public class Animal {
         this.ATK = BASE_ATK;
         this.HP = 100;
         this.tool = new ArrayList<Tool>();
+        //初始时拥有一个双倍攻击力的道具
+        this.tool.add(new Tool("doubleAttackPower"));
 
     }
 
