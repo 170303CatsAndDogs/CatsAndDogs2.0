@@ -14,14 +14,6 @@ import java.util.regex.Pattern;
  * over 比赛是否结束，True结束，False没结束
  * round 回合数
  * roundOwner 当前回合所有者 0：cat，1：dog
- * MAXSTRENGTH  最大输入力度
- * MINSTRENGTH  最小输入力度
- * MINHITSTRENGTH  最小击中力度
- * MAXHITSTRENGTH  最大击中力度
- * TOOLOP  表示当前回合为选择道具阶段
- * ATKOP   表示当前回合为输入攻击力度阶段
- * TOOLOPLOWBORDER    选择道具阶段输入的下界
- * TOOLOPHIGHBORDER   选择道具阶段输入的上界
  * @date 2020.3.27
  */
 public class Control {
@@ -33,16 +25,51 @@ public class Control {
     private boolean over;
     private int round;
     private int roundOwner;
+    /**
+     * The constant MAXSTRENGTH.
+     * 最大输入力度
+     */
     public static final int MAXSTRENGTH = 10;
+    /**
+     * The constant MINSTRENGTH.
+     * 最小输入力度
+     */
     public static final int MINSTRENGTH = 0;
+    /**
+     * The constant MINHITSTRENGTH.
+     * 最小击中力度
+     */
     public static final int MINHITSTRENGTH = 4;
+    /**
+     * The constant MAXHITSTRENGTH.
+     * 最大击中力度
+     */
     public static final int MAXHITSTRENGTH = 6;
+    /**
+     * The constant TOOLOP.
+     * 表示当前回合的选择道具阶段
+     */
     public static final int TOOLOP = 1;
+    /**
+     * The constant ATKOP.
+     * 表示当前回合的输入攻击力度阶段
+     */
     public static final int ATKOP = 2;
+    /**
+     * The constant TOOLOPLOWBORDER.
+     * 选择道具阶段输入的下界
+     */
     public static final int TOOLOPLOWBORDER = 1;
+    /**
+     * The constant TOOLOPHIGHBORDER.
+     * 选择道具阶段输入的上界
+     */
     public static final int TOOLOPHIGHBORDER = 2;
 
 
+    /**
+     * Instantiates a new Control.
+     */
     public Control(){
         this.cat = new Animal("cat");
         this.dog = new Animal("dog");
@@ -93,7 +120,6 @@ public class Control {
         this.strength = strength;
     }
 
-
     public Animal getCat() {
         return cat;
     }
@@ -102,6 +128,12 @@ public class Control {
         return dog;
     }
 
+    /**
+     * Is numeric boolean.
+     *
+     * @param str the str
+     * @return the boolean
+     */
     public static boolean isNumeric(String str){
         if(!str.isEmpty()){
             for (int i = str.length();--i>=0;){
@@ -114,12 +146,18 @@ public class Control {
         return false;
     }
 
+    /**
+     * Output.
+     */
     public void output(){
         System.out.println("Cat                                                 Dog");
         System.out.println("HP:" + this.cat.getHP() +"                                              Dog:" + this.dog.getHP());
         System.out.println("道具数:" + this.cat.getTool().size() +"                                             道具数:" + this.dog.getTool().size());
     }
 
+    /**
+     * Play.
+     */
     public void play(){
         while (!this.over){
             System.out.println("ROUND  " + this.getRound());
@@ -146,6 +184,11 @@ public class Control {
         }
     }
 
+    /**
+     * Attack int.
+     *
+     * @return the int
+     */
     public int attack(){
         if(this.getStrength()>=MINHITSTRENGTH && this.getStrength()<=MAXHITSTRENGTH){
             if(this.roundOwner == 0){
@@ -164,6 +207,11 @@ public class Control {
         }
     }
 
+    /**
+     * Game over int.
+     *检测游戏是否已经结束
+     * @return the int
+     */
     public int gameOver(){
         if(this.dog.getHP()<=0){
             this.over = true;
@@ -181,7 +229,8 @@ public class Control {
 
     /**
      * Get input int.
-     *在一个回合中获取玩家的两次输入。
+     * 在一个回合中获取玩家的两次输入。
+     *
      * @return the int
      */
     public int getInput(){
@@ -216,12 +265,12 @@ public class Control {
         }
         else if(this.operation == ATKOP) {
             System.out.println("请输入你的攻击力度（0-10的整数）");
-            String iindex;
+            String index;
             int istrength;
             while (true){
-                iindex = scanner.nextLine();
-                if(isNumeric(iindex)){
-                    istrength = Integer.parseInt(iindex);
+                index = scanner.nextLine();
+                if(isNumeric(index)){
+                    istrength = Integer.parseInt(index);
                     if(istrength <= MAXSTRENGTH && istrength >= MINSTRENGTH){
                         this.setStrength(istrength);
                         this.setOperation(TOOLOP);
@@ -238,6 +287,11 @@ public class Control {
         }
     }
 
+    /**
+     * Use tool int.
+     *
+     * @return the int
+     */
     public int useTool(){
         if(this.operationNum == TOOLOPHIGHBORDER){
             if(this.roundOwner == 0){
@@ -252,11 +306,20 @@ public class Control {
         }
     }
 
+    /**
+     * Change round.
+     */
     public void changeRound(){
         this.setRoundOwner((this.roundOwner + 1) % 2);
     }
 
 
+    /**
+     * Set input.
+     * 仅是为了测试而写的函数，在程序运行过程中无意义
+     *
+     * @param input the input
+     */
     public void setInput(int input){
         if(this.operation == TOOLOP){
             this.setOperationNum(input);
@@ -267,6 +330,11 @@ public class Control {
         }
     }
 
+    /**
+     * Main.
+     *
+     * @param args the args
+     */
     public static void main(String[] args){
         Control control = new Control();
         control.play();
