@@ -171,6 +171,7 @@ public class Control {
             this.getInput();
             this.attack();
             this.cat.endUsingTool();
+            this.cat.randomToolGet();
             this.gameOver();
             if(over){ break; }
             this.changeRound();
@@ -180,6 +181,7 @@ public class Control {
             this.getInput();
             this.attack();
             this.dog.endUsingTool();
+            this.dog.randomToolGet();
             this.gameOver();
             this.changeRound();
             System.out.println("==========================================================");
@@ -302,11 +304,12 @@ public class Control {
      * @return the int
      */
     public int useTool(){
-        if(this.operationNum <= TOOLOPHIGHBORDER){
-            Animal animal = new Animal();
-            if(this.roundOwner == 0) animal = this.cat;
-            else if(this.roundOwner == 1) animal = this.dog;
-            else return  -1;
+        Animal animal = new Animal();
+        if(this.roundOwner == 0) animal = this.cat;
+        else if(this.roundOwner == 1) animal = this.dog;
+        else return  -1;
+        if(this.operationNum <= animal.getTool().size()+1){
+
             String toolName = animal.getTool().get(operationNum-2).getName();
             if(toolName.equals("poison")){
                 System.out.println(animal.getName()+animal.getTool().get(operationNum-2).getLabel());//打印道具信息

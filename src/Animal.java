@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * 动物类
@@ -128,6 +129,45 @@ public class Animal {
             return 0;
         }
         return 0;
+    }
+    /**
+     * 随机道具获得
+     * @return 成功返回0，否则返回-1
+     */
+    public int randomToolGet(){
+        Random r = new Random();
+        int random  = r.nextInt(100);
+
+        if(random<=60){
+            System.out.println(this.name+"没有获得随机道具");
+            return 0;
+
+        }
+        else if(random>60&&random<=70){
+            List<Tool> tools = this.getTool();
+            tools.add(new Tool("doubleAttackPower"));
+            System.out.println(this.name+"获得随机道具：双倍攻击力");
+            return 0;
+        }
+        else if(random>70&&random<=80){
+            List<Tool> tools = this.getTool();
+            tools.add(new Tool("poison"));
+            System.out.println(this.name+"获得随机道具：施放毒药");
+            return 0;
+        }
+        else if(random>80&&random<=90){
+            List<Tool> tools = this.getTool();
+            tools.add(new Tool("doubleAttackTimes"));
+            System.out.println(this.name+"获得随机道具：两次攻击机会");
+            return 0;
+        }
+        else if(random>90&&random<=100){
+            List<Tool> tools = this.getTool();
+            tools.add(new Tool("recover"));
+            System.out.println(this.name+"获得随机道具：恢复血量");
+            return 0;
+        }
+        else return -1 ;
     }
 
     /**
