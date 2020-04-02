@@ -1,5 +1,6 @@
 
 
+import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -238,11 +239,10 @@ public class Control {
         if(this.operation == TOOLOP){
             System.out.println("请选择你的操作（输入操作前的数字）");
             System.out.println("1.不使用道具");
-            System.out.println("2.使用道具");
-//            System.out.println("2.使用道具1");
-//            System.out.println("3.使用道具2");
-//            System.out.println("4.使用道具3");
-//            System.out.println("5.使用道具4");
+            System.out.println("2.使用道具1");
+            System.out.println("3.使用道具2");
+            System.out.println("4.使用道具3");
+            System.out.println("5.使用道具4");
 
             String index;
             int ioperationNum;
@@ -329,6 +329,18 @@ public class Control {
             return;
         }
     }
+
+
+    /**
+     * Who goes first judge.
+     * 游戏开始前初始化函数
+     */
+    public void whoGoesFirstJudge(){
+        Random random = new Random();
+        this.setRoundOwner(random.nextInt(2));
+    }
+
+
 
     /**
      * Main.
