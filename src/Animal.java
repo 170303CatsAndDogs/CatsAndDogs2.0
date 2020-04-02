@@ -26,6 +26,9 @@ public class Animal {
         this.tool = new ArrayList<Tool>();
         //初始时拥有一个双倍攻击力的道具
         this.tool.add(new Tool("doubleAttackPower"));
+        this.tool.add(new Tool("poison"));
+        this.tool.add(new Tool("doubleAttackTimes"));
+        this.tool.add(new Tool("recover"));
     }
 
     public Animal(String name) {
@@ -35,6 +38,9 @@ public class Animal {
         this.tool = new ArrayList<Tool>();
         //初始时拥有一个双倍攻击力的道具
         this.tool.add(new Tool("doubleAttackPower"));
+        this.tool.add(new Tool("poison"));
+        this.tool.add(new Tool("doubleAttackTimes"));
+        this.tool.add(new Tool("recover"));
 
     }
 
@@ -97,7 +103,7 @@ public class Animal {
      * 使用道具(两倍攻击力效果一回合)
      * @return 使用成功返回0，否则返回-1
      */
-    public int useTool() {
+    public int useTool(int operationNum) {
         //通过tool集合长度判断道具数是否为零
         int num = this.tool.size();
         if (num == 0) {
@@ -105,11 +111,22 @@ public class Animal {
             return -1;
         }
         //使用道具后的效果实现，并打印出来
-        this.ATK = BASE_ATK * 2;
-        System.out.println(this.name+this.tool.get(0).getLabel());
-        //删除使用过的道具，在版本一中暂时用remove(0)来实现
-        this.tool.remove(0);
-        //this.tool.size(num - 1);
+        Tool tool = this.getTool().get(operationNum-2);//这里的operationNum-2目的是对应tool集合的序号
+        if(tool.getName().equals("doubleAttackPower")){
+            this.ATK = BASE_ATK * 2;
+            System.out.println(this.name+tool.getLabel());
+            //删除使用过的道具
+            this.tool.remove(tool);
+            return 0;
+        }
+        else if(tool.getName().equals("recover")){
+            if(this.HP+30>100) this.HP = 100;
+            else this.HP +=30 ;
+            System.out.println(this.name+tool.getLabel());
+            //删除使用过的道具
+            this.tool.remove(tool);
+            return 0;
+        }
         return 0;
     }
 
