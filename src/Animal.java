@@ -25,7 +25,7 @@ public class Animal {
         this.ATK = BASE_ATK;
         this.HP = 100;
         this.tool = new ArrayList<Tool>();
-        //初始时拥有一个双倍攻击力的道具
+       /*初始时拥有一个双倍攻击力的道具*/
         this.tool.add(new Tool("doubleAttackPower"));
         this.tool.add(new Tool("poison"));
         this.tool.add(new Tool("doubleAttackTimes"));
@@ -37,7 +37,7 @@ public class Animal {
         this.ATK = BASE_ATK;
         this.HP = 100;
         this.tool = new ArrayList<Tool>();
-        //初始时拥有一个双倍攻击力的道具
+     /*  初始时拥有一个双倍攻击力的道具*/
         this.tool.add(new Tool("doubleAttackPower"));
         this.tool.add(new Tool("poison"));
         this.tool.add(new Tool("doubleAttackTimes"));
@@ -111,18 +111,18 @@ public class Animal {
             return -1;
         }
         Tool tool = this.getTool().get(operationNum-2);
-        if(tool.getName().equals("doubleAttackPower")){
+        if(Tool.DOUBLEATTACKPOWER.equals(tool.getName())){
             this.ATK = BASE_ATK * 2;
             System.out.println(this.name+tool.getLabel());
             removeTool("doubleAttackPower");
             return 0;
         }
-        else if(tool.getName().equals("recover")){
-            if(this.HP+30>100) {
-                this.HP = 100;
+        else if(Tool.RECOVER.equals(tool.getName())){
+            if(this.HP+Tool.RECOVERHP>Tool.MAXHP) {
+                this.HP = Tool.MAXHP;
             }
             else {
-                this.HP +=30 ;
+                this.HP +=Tool.RECOVERHP ;
             }
             System.out.println(this.name+tool.getLabel());
             removeTool("recover");
@@ -138,27 +138,27 @@ public class Animal {
         Random r = new Random();
         int random  = r.nextInt(100);
 
-        if(random<=60){
+        if(random<=Tool.RATE1){
             System.out.println(this.name+"没有获得随机道具");
             return 0;
 
         }
-        else if(random>60&&random<=70){
+        else if(random>Tool.RATE1&&random<=Tool.RATE2){
             addTool("doubleAttackPower");
             System.out.println(this.name+"获得随机道具：双倍攻击力");
             return 0;
         }
-        else if(random>70&&random<=80){
+        else if(random>Tool.RATE2&&random<=Tool.RATE3){
             addTool("poison");
             System.out.println(this.name+"获得随机道具：施放毒药");
             return 0;
         }
-        else if(random>80&&random<=90){
+        else if(random>Tool.RATE3&&random<=Tool.RATE4){
             addTool("doubleAttackTimes");
             System.out.println(this.name+"获得随机道具：两次攻击机会");
             return 0;
         }
-        else if(random>90&&random<=100){
+        else if(random>Tool.RATE4&&random <Tool.RATE5){
             addTool("recover");
             System.out.println(this.name+"获得随机道具：恢复血量");
             return 0;
@@ -205,15 +205,11 @@ public class Animal {
                     tools.remove(tool);
                     return 0;
                 }
-                else{
-                    return -1;
-                }
-
-            } else {
-                return -1;
             }
         }
-        return 0;
+            return -1;
+
+
     }
     /**
      * 道具效果结束，攻击力变为10

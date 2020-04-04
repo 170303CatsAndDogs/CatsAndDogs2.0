@@ -69,6 +69,7 @@ public class Control {
     public static final int TOOLOPHIGHBORDER = 5;
 
 
+
     /**
      * Instantiates a new Control.
      */
@@ -152,9 +153,18 @@ public class Control {
      * Output.
      */
     public void output(){
+        /*道具数*/
+        int toolNum1 = 0;
+        int toolNum2 = 0;
+        for (Tool tool : this.cat.getTool()) {
+            toolNum1+=tool.getNumber();
+        }
+        for (Tool tool : this.dog.getTool()) {
+            toolNum2+=tool.getNumber();
+        }
         System.out.println("Cat                                                 Dog");
         System.out.println("HP:" + this.cat.getHP() +"                                              Dog:" + this.dog.getHP());
-        System.out.println("道具数:" + this.cat.getTool().size() +"                                             道具数:" + this.dog.getTool().size());
+        System.out.println("道具数:" + toolNum1 +"                                             道具数:" + toolNum2);
     }
 
     /**
@@ -243,13 +253,15 @@ public class Control {
             System.out.println("请选择你的操作（输入操作前的数字）");
             System.out.println("1.不使用道具");
             Animal animal = new Animal();
-            if(this.roundOwner == 0)//猫的回合，则展示猫拥有的所有道具
+            if(this.roundOwner == 0) {
                 animal = this.cat;
-            else if(this.roundOwner == 1)//狗的回合，则展示狗拥有的所有道具
-                animal = this.dog;
-            int num = 2;//序号
+              }
+            else if(this.roundOwner == 1){
+                 animal = this.dog;
+               }
+            int num = 2;
             for(Tool tool :animal.getTool()){
-                System.out.println(num+".使用道具:"+tool.getNameCN()+"X"+tool.getNumber());
+                System.out.println(num+".使用道具:"+tool.getNameCn()+"X"+tool.getNumber());
                 num++;
             }
 
@@ -304,7 +316,7 @@ public class Control {
      * @return the int
      */
     public int useTool(){
-        Animal animal = new Animal();
+        Animal animal;
         if(this.roundOwner == 0){
             animal = this.cat;
         }
@@ -314,33 +326,23 @@ public class Control {
         else{
             return  -1;
         }
-        if(this.operationNum <= animal.getTool().size()+1){
-
+        if(this.operationNum <= animal.getTool().size()+1&&this.operationNum >1){
             String toolName = animal.getTool().get(operationNum-2).getName();
-            if(toolName.equals("poison")){
-
+            if(Tool.POISON.equals(toolName)){
                 System.out.println(animal.getName()+animal.getTool().get(operationNum-2).getLabel());
                 Animal opposite = this.roundOwner==0?this.dog:this.cat;
                 animal.removeTool("poison");
                 animal.attack(opposite,30);
                 return 0;
             }
-            else if(toolName.equals("doubleAttackTimes")){
+            else if(Tool.DOUBLEATTACKTIMES.equals(toolName)){
                 System.out.println(animal.getName()+animal.getTool().get(operationNum-2).getLabel());
-                List<Tool> tools = animal.getTool();
                 animal.removeTool("doubleAttackTimes");
-                animal.setTool(tools);
                 System.out.println("\n\n这是额外获得的攻击回合 该功能请control类的同学完成哦 go!\n\n");
-
-
-
                 return 0;
             }
-
-
             else {
                 return animal.useTool(operationNum);}
-
         }else{
             return -1;
         }

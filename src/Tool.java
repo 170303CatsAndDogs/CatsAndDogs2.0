@@ -14,32 +14,76 @@ public class Tool {
     private String name;
     private String label;
     /*中文名字*/
-    private String nameCN;
+    private String nameCn;
+    /**
+     * The constant DOUBLEATTACKTIMES.
+     * 两次攻击name值
+     */
+    public static final String DOUBLEATTACKTIMES = "doubleAttackTimes";
+    /**
+     * The constant POISON.
+     *毒药name值
+     */
+    public static final String POISON = "poison";
+    /**
+     * The constant DOUBLEATTACKPOWER.
+     * 双倍攻击力name值
+     */
+    public static final String DOUBLEATTACKPOWER = "doubleAttackPower";
+    /**
+     * The constant RECOVER.
+     *回血name值
+     */
+    public static final String RECOVER = "recover";
+    /**
+     * The constant RECOVER.
+     *回血值
+     */
+    public static final int RECOVERHP = 30;
+    /**
+     * The constant RECOVER.
+     *回血上限
+     */
+    public static final int MAXHP = 100;
+    /**
+     * The constant RATEx.
+     *获得道具几率分隔值
+     * 0~60 无道具
+     * 60~70 双倍攻击力
+     * 70~80 毒药
+     * 80~90 两次攻击机会
+     * 90~100 恢复30hp
+     */
+    public static final int RATE1 = 60;
+    public static final int RATE2 = 70;
+    public static final int RATE3 = 80;
+    public static final int RATE4 = 90;
+    public static final int RATE5 = 100;
 
     public Tool(String name) {
         this.name = name;
-        if(name.equals("doubleAttackPower"))
+        if(DOUBLEATTACKPOWER.equals(name))
         {
             this.label = "使用道具，得到了双倍的攻击力";
-            this.nameCN = "双倍攻击力";
+            this.nameCn = "双倍攻击力";
             this.number=1;
         }
-        if(name.equals("poison"))
+        if(POISON.equals(name))
         {
             this.label = "使用道具，对敌人施放毒药，减少敌人30HP";
-            this.nameCN = "施放毒药";
+            this.nameCn = "施放毒药";
             this.number=1;
         }
-        if(name.equals("doubleAttackTimes"))
+        if(DOUBLEATTACKTIMES.equals(name))
         {
             this.label = "使用道具，得到了两次攻击机会";
-            this.nameCN = "两次攻击";
+            this.nameCn = "两次攻击";
             this.number=1;
         }
-        if(name.equals("recover"))
+        if(RECOVER.equals(name))
         {
             this.label = "使用道具，恢复了30HP";
-            this.nameCN = "恢复血量";
+            this.nameCn = "恢复血量";
             this.number=1;
         }
     }
@@ -63,13 +107,7 @@ public class Tool {
         this.label = label;
     }
 
-    public String getNameCN() {
-        return nameCN;
-    }
 
-    public void setNameCN(String nameCN) {
-        this.nameCN = nameCN;
-    }
 
     public int getNumber() {
         return number;
@@ -77,5 +115,13 @@ public class Tool {
 
     public void setNumber(int number) {
         this.number = number;
+    }
+
+    public String getNameCn() {
+        return nameCn;
+    }
+
+    public void setNameCn(String nameCn) {
+        this.nameCn = nameCn;
     }
 }
