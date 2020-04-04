@@ -14,14 +14,7 @@ public class Wind {
 
     // Constructors
     public Wind () {
-        random = new Random();
-        windStrength = random.nextInt(11);
-        int dir = random.nextInt(2);
-        if (dir == 0) {
-            this.direct = "顺风";
-        }else {
-            this.direct = "逆风";
-        }
+        getRandomWind();
     }
 
     // Getters and Setters
@@ -41,6 +34,25 @@ public class Wind {
         this.windStrength = windStrength;
     }
 
+
+    /**
+     * 得到随机风力和风向
+     * 风力大小：0-10，风向：顺风、逆风
+     */
+    public void getRandomWind() {
+        random = new Random();
+        windStrength = random.nextInt(11);
+        int dir = random.nextInt(2);
+        if (dir == 0) {
+            this.direct = "顺风";
+        }else {
+            this.direct = "逆风";
+        }
+    }
+
+    /**
+     * @return 风力值顺风为正、逆风为负
+     */
     public int getActualWindStrength() {
         if ("顺风".equals(this.direct)) {
             return this.windStrength;
