@@ -10,10 +10,11 @@
  * */
 
 public class Tool {
-    //private int number;
+    private int number;
     private String name;
     private String label;
-    private String nameCN;//中文名字
+    /*中文名字*/
+    private String nameCN;
 
     public Tool(String name) {
         this.name = name;
@@ -21,21 +22,25 @@ public class Tool {
         {
             this.label = "使用道具，得到了双倍的攻击力";
             this.nameCN = "双倍攻击力";
+            this.number=1;
         }
         if(name.equals("poison"))
         {
             this.label = "使用道具，对敌人施放毒药，减少敌人30HP";
             this.nameCN = "施放毒药";
+            this.number=1;
         }
         if(name.equals("doubleAttackTimes"))
         {
             this.label = "使用道具，得到了两次攻击机会";
             this.nameCN = "两次攻击";
+            this.number=1;
         }
         if(name.equals("recover"))
         {
             this.label = "使用道具，恢复了30HP";
             this.nameCN = "恢复血量";
+            this.number=1;
         }
     }
 
@@ -64,5 +69,13 @@ public class Tool {
 
     public void setNameCN(String nameCN) {
         this.nameCN = nameCN;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 }

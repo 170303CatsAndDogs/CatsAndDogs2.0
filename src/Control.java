@@ -249,7 +249,7 @@ public class Control {
                 animal = this.dog;
             int num = 2;//序号
             for(Tool tool :animal.getTool()){
-                System.out.println(num+".使用道具:"+tool.getNameCN());
+                System.out.println(num+".使用道具:"+tool.getNameCN()+"X"+tool.getNumber());
                 num++;
             }
 
@@ -305,25 +305,30 @@ public class Control {
      */
     public int useTool(){
         Animal animal = new Animal();
-        if(this.roundOwner == 0) animal = this.cat;
-        else if(this.roundOwner == 1) animal = this.dog;
-        else return  -1;
+        if(this.roundOwner == 0){
+            animal = this.cat;
+        }
+        else if(this.roundOwner == 1) {
+            animal = this.dog;
+        }
+        else{
+            return  -1;
+        }
         if(this.operationNum <= animal.getTool().size()+1){
 
             String toolName = animal.getTool().get(operationNum-2).getName();
             if(toolName.equals("poison")){
-                System.out.println(animal.getName()+animal.getTool().get(operationNum-2).getLabel());//打印道具信息
-                Animal opposite = this.roundOwner==0?this.dog:this.cat;//得到对手
-                List<Tool> tools = animal.getTool();
-                tools.remove(operationNum-2);  //使用完后移除道具
-                animal.setTool(tools);
-                animal.attack(opposite,30); //产生伤害
+
+                System.out.println(animal.getName()+animal.getTool().get(operationNum-2).getLabel());
+                Animal opposite = this.roundOwner==0?this.dog:this.cat;
+                animal.removeTool("poison");
+                animal.attack(opposite,30);
                 return 0;
             }
             else if(toolName.equals("doubleAttackTimes")){
-                System.out.println(animal.getName()+animal.getTool().get(operationNum-2).getLabel());//打印道具信息
+                System.out.println(animal.getName()+animal.getTool().get(operationNum-2).getLabel());
                 List<Tool> tools = animal.getTool();
-                tools.remove(operationNum-2);//使用完后移除道具
+                animal.removeTool("doubleAttackTimes");
                 animal.setTool(tools);
                 System.out.println("\n\n这是额外获得的攻击回合 该功能请control类的同学完成哦 go!\n\n");
 
@@ -333,7 +338,8 @@ public class Control {
             }
 
 
-            else return animal.useTool(operationNum);
+            else {
+                return animal.useTool(operationNum);}
 
         }else{
             return -1;
