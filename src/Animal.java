@@ -25,7 +25,7 @@ public class Animal {
         this.ATK = BASE_ATK;
         this.HP = 100;
         this.tool = new ArrayList<Tool>();
-       /*初始时拥有一个双倍攻击力的道具*/
+        /*初始时拥有一个双倍攻击力的道具*/
         this.tool.add(new Tool("doubleAttackPower"));
         this.tool.add(new Tool("poison"));
         this.tool.add(new Tool("doubleAttackTimes"));
@@ -37,7 +37,7 @@ public class Animal {
         this.ATK = BASE_ATK;
         this.HP = 100;
         this.tool = new ArrayList<Tool>();
-     /*  初始时拥有一个双倍攻击力的道具*/
+        /*  初始时拥有一个双倍攻击力的道具*/
         this.tool.add(new Tool("doubleAttackPower"));
         this.tool.add(new Tool("poison"));
         this.tool.add(new Tool("doubleAttackTimes"));
@@ -105,29 +105,34 @@ public class Animal {
      * @return 使用成功返回0，否则返回-1
      */
     public int useTool(int operationNum) {
-        int num = this.tool.size();
+        int indexTool = operationNum - 2;
+        //通过tool集合长度判断道具数是否为零
+        int num = this.tool.get(indexTool).getNumber();
         if (num == 0) {
             System.out.println("道具数为0！");
             return -1;
         }
-        Tool tool = this.getTool().get(operationNum-2);
-        if(Tool.DOUBLEATTACKPOWER.equals(tool.getName())){
+        //使用道具后的效果实现，并打印出来
+        //这里的operationNum-2目的是对应tool集合的序号
+        Tool tool = this.getTool().get(indexTool);
+        if(tool.getName().equals("doubleAttackPower")){
             this.ATK = BASE_ATK * 2;
             System.out.println(this.name+tool.getLabel());
-            removeTool("doubleAttackPower");
+            //删除使用过的道具
+            this.tool.get(indexTool).setNumber(this.tool.get(indexTool).getNumber()-1);
+            return 0;
+        }else if(tool.getName().equals("recover")) {
+            if (this.HP + 30 > 100) {
+                this.HP = 100;
+            } else {
+                this.HP += 30;
+            }
+            System.out.println(this.name + tool.getLabel());
+            //删除使用过的道具
+            this.tool.get(indexTool).setNumber(this.tool.get(indexTool).getNumber() - 1);
             return 0;
         }
-        else if(Tool.RECOVER.equals(tool.getName())){
-            if(this.HP+Tool.RECOVERHP>Tool.MAXHP) {
-                this.HP = Tool.MAXHP;
-            }
-            else {
-                this.HP +=Tool.RECOVERHP ;
-            }
-            System.out.println(this.name+tool.getLabel());
-            removeTool("recover");
-            return 0;
-        }
+
         return 0;
     }
     /**
@@ -144,73 +149,31 @@ public class Animal {
 
         }
         else if(random>Tool.RATE1&&random<=Tool.RATE2){
-            addTool("doubleAttackPower");
+            this.tool.get(0).setNumber(this.tool.get(0).getNumber() + 1);
             System.out.println(this.name+"获得随机道具：双倍攻击力");
             return 0;
         }
         else if(random>Tool.RATE2&&random<=Tool.RATE3){
-            addTool("poison");
+            this.tool.get(1).setNumber(this.tool.get(1).getNumber() + 1);
             System.out.println(this.name+"获得随机道具：施放毒药");
             return 0;
         }
         else if(random>Tool.RATE3&&random<=Tool.RATE4){
-            addTool("doubleAttackTimes");
+            this.tool.get(2).setNumber(this.tool.get(2).getNumber() + 1);
             System.out.println(this.name+"获得随机道具：两次攻击机会");
             return 0;
         }
         else if(random>Tool.RATE4&&random <Tool.RATE5){
-            addTool("recover");
+            this.tool.get(3).setNumber(this.tool.get(3).getNumber() + 1);
             System.out.println(this.name+"获得随机道具：恢复血量");
             return 0;
-        }
-        else {
+        } else {
             return -1 ;
         }
-    }
-
-    /**
-     * 添加道具的方法
-     * @return 成功 0 ，失败 -1
-     */
-    public int addTool(String toolName){
-        List<Tool> tools = this.getTool();
-        int flag = 0;
-        for (Tool tool : tools) {
-            if(tool.getName().equals(toolName)) {
-                tool.setNumber(tool.getNumber()+1);
-                flag = 1;
-                return 0;
-            }
-        }
-        if(flag == 0){
-            tools.add(new Tool(toolName));
-            return 0;
-        }
-        else {
-            return -1;
-        }
-    }
-    /**
-     * 删除道具的方法
-     * @return 成功 0 ，失败 -1
-     */
-    public int removeTool(String toolName) {
-        List<Tool> tools = this.getTool();
-        for (Tool tool : tools) {
-            if (tool.getName().equals(toolName)) {
-                if (tool.getNumber() > 1) {
-                    tool.setNumber(tool.getNumber() - 1);
-                    return 0;
-                } else if (tool.getNumber() == 1) {
-                    tools.remove(tool);
-                    return 0;
-                }
-            }
-        }
-            return -1;
-
 
     }
+
+
     /**
      * 道具效果结束，攻击力变为10
      */

@@ -61,6 +61,7 @@ public class Tool {
     public static final int RATE5 = 100;
 
     public Tool(String name) {
+        this.number = 1;
         this.name = name;
         if(DOUBLEATTACKPOWER.equals(name))
         {
@@ -87,8 +88,6 @@ public class Tool {
             this.number=1;
         }
     }
-
-
 
 
     public String getName() {
