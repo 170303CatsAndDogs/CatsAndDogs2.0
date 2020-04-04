@@ -1,5 +1,6 @@
 
 
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -65,7 +66,7 @@ public class Control {
      * The constant TOOLOPHIGHBORDER.
      * 选择道具阶段输入的上界
      */
-    public static final int TOOLOPHIGHBORDER = 2;
+    public static final int TOOLOPHIGHBORDER = 5;
 
 
     /**
@@ -170,6 +171,7 @@ public class Control {
             this.getInput();
             this.attack();
             this.cat.endUsingTool();
+            this.cat.randomToolGet();
             this.gameOver();
             if(over){ break; }
             this.changeRound();
@@ -179,6 +181,7 @@ public class Control {
             this.getInput();
             this.attack();
             this.dog.endUsingTool();
+            this.dog.randomToolGet();
             this.gameOver();
             this.changeRound();
             System.out.println("==========================================================");
@@ -239,10 +242,16 @@ public class Control {
         if(this.operation == TOOLOP){
             System.out.println("请选择你的操作（输入操作前的数字）");
             System.out.println("1.不使用道具");
-            System.out.println("2.使用道具1");
-            System.out.println("3.使用道具2");
-            System.out.println("4.使用道具3");
-            System.out.println("5.使用道具4");
+            Animal animal = new Animal();
+            if(this.roundOwner == 0)//猫的回合，则展示猫拥有的所有道具
+                animal = this.cat;
+            else if(this.roundOwner == 1)//狗的回合，则展示狗拥有的所有道具
+                animal = this.dog;
+            int num = 2;//序号
+            for(Tool tool :animal.getTool()){
+                System.out.println(num+".使用道具:"+tool.getNameCN());
+                num++;
+            }
 
             String index;
             int ioperationNum;
@@ -255,10 +264,10 @@ public class Control {
                         this.setOperation(ATKOP);
                         return this.operationNum;
                     }else{
-                        System.out.println("1选择道具有误，只能输入1或者2");
+                        System.out.println("选择道具有误");
                     }
                 }else {
-                    System.out.println("选择道具有误，只能输入1或者2");
+                    System.out.println("选择道具有误");
                 }
             }
 
@@ -287,20 +296,45 @@ public class Control {
         }
     }
 
+
     /**
      * Use tool int.
-     *
+     *operationNum表示玩家输入的数字，此数字对应相应的道具，作为参数传递给猫获狗的useTool函数，由其进行使用道具、使用完后移除道具的过程。
+     * 但是由于某些道具在control类中实现比较方便，故将其写在以下函数，分别为 毒药 和 两次攻击 ，其中两次攻击尚未实现，需要设计此类的同学斟酌过后加以实现
      * @return the int
      */
     public int useTool(){
-        if(this.operationNum == TOOLOPHIGHBORDER){
-            if(this.roundOwner == 0){
-                return cat.useTool();
-            }else if(this.roundOwner == 1){
-                return dog.useTool();
-            }else{
-                return -1;
+        Animal animal = new Animal();
+        if(this.roundOwner == 0) animal = this.cat;
+        else if(this.roundOwner == 1) animal = this.dog;
+        else return  -1;
+        if(this.operationNum <= animal.getTool().size()+1){
+
+            String toolName = animal.getTool().get(operationNum-2).getName();
+            if(toolName.equals("poison")){
+                System.out.println(animal.getName()+animal.getTool().get(operationNum-2).getLabel());//打印道具信息
+                Animal opposite = this.roundOwner==0?this.dog:this.cat;//得到对手
+                List<Tool> tools = animal.getTool();
+                tools.remove(operationNum-2);  //使用完后移除道具
+                animal.setTool(tools);
+                animal.attack(opposite,30); //产生伤害
+                return 0;
             }
+            else if(toolName.equals("doubleAttackTimes")){
+                System.out.println(animal.getName()+animal.getTool().get(operationNum-2).getLabel());//打印道具信息
+                List<Tool> tools = animal.getTool();
+                tools.remove(operationNum-2);//使用完后移除道具
+                animal.setTool(tools);
+                System.out.println("\n\n这是额外获得的攻击回合 该功能请control类的同学完成哦 go!\n\n");
+
+
+
+                return 0;
+            }
+
+
+            else return animal.useTool(operationNum);
+
         }else{
             return -1;
         }
