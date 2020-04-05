@@ -3,30 +3,53 @@
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.regex.Pattern;
-
 
 /**
  * The type Control.
- *
  * @author Lv and Zhou
- * @Description cat, dog Animal类
- * strength 攻击力度
- * operation 操作(0：表示选择道具的输入操作，1表示攻击力度的输入操作
- * over 比赛是否结束，True结束，False没结束
- * round 回合数
- * roundOwner 当前回合所有者 0：cat，1：dog
  * @date 2020.3.27
  */
 public class Control {
+    /**
+     * cat, dog
+     * Animal类
+     */
     private Animal cat;
     private Animal dog;
+    /**
+     * strength
+     * 攻击力度
+     */
     private int strength;
+    /**
+     * operation
+     * 操作(0：表示选择道具的输入操作，1表示攻击力度的输入操作)
+     */
     private int operation;
+    /**
+     * operationNum
+     * 道具操作输入，0不使用道具，1双倍攻击道具，2毒药，3两次打击，4治疗
+     */
     private int operationNum;
+    /**
+     * over
+     * 比赛是否结束，True结束，False没结束
+     */
     private boolean over;
+    /**
+     * round
+     * 回合数
+     */
     private int round;
+    /**
+     * roundOwner
+     * 当前回合所有者 0：cat，1：dog
+     */
     private int roundOwner;
+    /**
+     * wind
+     * 风类
+     */
     private Wind wind;
     /**
      * The constant TOOL1.
@@ -189,7 +212,7 @@ public class Control {
         }
         System.out.println("  风速:"+this.wind.getWindStrength()+"                Dog");
         System.out.println("HP:" + this.cat.getHP() +"                                              Dog:" + this.dog.getHP());
-        System.out.println("道具数:" + this.cat.getTool().size() +"                                             道具数:" + this.dog.getTool().size());
+        System.out.println("道具数:" + this.cat.calculateToolNum() +"                                             道具数:" + this.dog.calculateToolNum());
     }
 
     /**
@@ -201,6 +224,7 @@ public class Control {
             System.out.println("ROUND  " + this.getRound());
             this.setRound(this.getRound()+1);
             this.wind.getRandomWind();
+            this.whoGoesFirstJudge();
             this.output();
             if(this.getRoundOwner() == 0){
                 this.catPlay();
@@ -232,13 +256,13 @@ public class Control {
         System.out.println("猫猫的回合  go!");
         this.getOperationInput();
         this.useTool();
+        if(this.operationNum == TOOL4){
+            this.getInput();
+            this.attack();
+        }
         this.getInput();
         this.attack();
         this.cat.endUsingTool();
-        this.cat.randomToolGet();
-        if(this.operationNum == TOOL4){
-            this.catPlay();
-        }
     }
 
     /**
@@ -250,20 +274,19 @@ public class Control {
         System.out.println("狗狗的回合  go!");
         this.getOperationInput();
         this.useTool();
+        if(this.operationNum == TOOL4){
+            this.getInput();
+            this.attack();
+        }
         this.getInput();
         this.attack();
         this.dog.endUsingTool();
-        this.dog.randomToolGet();
-        if(this.operationNum == TOOL4){
-            this.dogPlay();
-        }
     }
 
 
     /**
      * Attack int.
-     * 对敌方进行攻击并进行命中判定
-     *
+     * 对敌方进行攻击并进行命中判定和命中后随机获得道具
      * @return the int
      */
     public int attack(){
@@ -272,6 +295,7 @@ public class Control {
             if(this.roundOwner == 0){
                 if(this.getStrength()>=MINHITSTRENGTH-this.wind.getActualWindStrength() && this.getStrength()<=MAXHITSTRENGTH-this.wind.getActualWindStrength()){
                     this.cat.attack(this.dog,cat.getATK());
+                    this.cat.randomToolGet();
                     return 0;
                 }else{
                     System.out.println("攻击没有命中");
@@ -280,6 +304,7 @@ public class Control {
             }else if(this.roundOwner == 1){
                 if(this.getStrength()>=MINHITSTRENGTH+this.wind.getActualWindStrength() && this.getStrength()<=MAXHITSTRENGTH+this.wind.getActualWindStrength()){
                     this.dog.attack(this.cat,dog.getATK());
+                    this.dog.randomToolGet();
                     return 1;
                 }else{
                     System.out.println("攻击没有命中");
@@ -336,18 +361,19 @@ public class Control {
                     istrength = Integer.parseInt(index);
                     if(istrength <= MAXSTRENGTH && istrength >= MINSTRENGTH){
                         this.setStrength(istrength);
-                        this.setOperation(TOOLOP);
                         return this.strength;
                     }else{
                         System.out.println("输入力度不在正确范围内，请重新输入");
+//                        return -1;
                     }
                 }else {
                     System.out.println("输入力度不在正确范围内，请重新输入");
+//                    return -1;
                 }
             }
         }else{
             //不需要输入攻击力度
-            return -99;
+            return -1;
         }
     }
 
@@ -391,19 +417,19 @@ public class Control {
                             System.out.println("道具数为0！请再一次进行选择");
                         }else{
                             this.setOperationNum(ioperationNum);
-                            this.setOperation(ATKOP);
                             return this.operationNum;
                         }
                     }else{
                         this.setOperationNum(ioperationNum);
-                        this.setOperation(ATKOP);
                         return this.operationNum;
                     }
                 }else{
                     System.out.println("选择道具有误");
+                    return -1;
                 }
             }else {
                 System.out.println("选择道具有误");
+                return -1;
             }
         }
     }
