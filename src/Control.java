@@ -132,6 +132,10 @@ public class Control {
         this.wind = new Wind();
     }
 
+    public Wind getWind() {
+        return wind;
+    }
+
     public void setRoundOwner(int roundOwner) {
         this.roundOwner = roundOwner;
     }
