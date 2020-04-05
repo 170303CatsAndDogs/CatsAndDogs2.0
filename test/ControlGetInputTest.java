@@ -17,43 +17,34 @@ import static org.junit.Assert.*;
 public class ControlGetInputTest {
     public ControlGetInputTest controlTest;
     private int expected;
-    private int operation;
-    private int input;
+    private int operationNum;
+    private String input;
 
 
-    public ControlGetInputTest(int expected, int operation, int input){
+    public ControlGetInputTest(int expected, String input, int operationNum){
         this.expected = expected;
-        this.operation = operation;
         this.input = input;
+        this.operationNum = operationNum;
     }
 
     @Parameterized.Parameters(name="{index}:getInput[{1},{2}]={0}")
     public static Collection testData(){
         return Arrays.asList(new Object[][]{
-                {-1, 0, 5},
-                {-1, 1, 5},
-                {5, 2, 5},
-                {-1, 3, 5},
-                {-1, 0, 2},
-                {2, 1, 2},
-                {2, 2, 2},
-                {-1, 3, 2},
-                {-1, 1, 0},
-                {1, 1, 1},
-                {2, 1, 2},
-                {-1, 1, 3},
-                {-1, 2, -1},
-                {0, 2, 0},
-                {1, 2, 1},
-                {9, 2, 9},
-                {10, 2, 10},
-                {-1, 2, 11},
+                {-1, "-1", 1},
+                {0, "0", 1},
+                {1, "1", 2},
+                {9, "9", 4},
+                {10, "10", 1},
+                {-1, "11", 2},
+                {-1, "a", 4},
+                {-1, "", 1},
+                {-1, "5", 3},
         });
     }
 
     @Before
     public void setUp(){
-        this.controlTest = new ControlGetInputTest(expected, operation, input);
+        this.controlTest = new ControlGetInputTest(expected, input, operationNum);
     }
 
     @After
@@ -64,9 +55,8 @@ public class ControlGetInputTest {
     @Test
     public void getInput() {
         Control control = new Control();
-        control.setOperation(operation);
-        control.setInput(input);
-        int result = control.getInput();
+        control.setOperationNum(this.operationNum);
+        int result = control.getInput(this.input);
         assertEquals(expected, result);
     }
 }
