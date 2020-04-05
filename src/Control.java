@@ -254,13 +254,13 @@ public class Control {
      */
     private void catPlay(){
         System.out.println("猫猫的回合  go!");
-        this.getOperationInput();
+        this.getOperationInput("");
         this.useTool();
         if(this.operationNum == TOOL4){
-            this.getInput();
+            this.getInput("");
             this.attack();
         }
-        this.getInput();
+        this.getInput("");
         this.attack();
         this.cat.endUsingTool();
     }
@@ -272,13 +272,13 @@ public class Control {
      */
     private void dogPlay(){
         System.out.println("狗狗的回合  go!");
-        this.getOperationInput();
+        this.getOperationInput("");
         this.useTool();
         if(this.operationNum == TOOL4){
-            this.getInput();
+            this.getInput("");
             this.attack();
         }
-        this.getInput();
+        this.getInput("");
         this.attack();
         this.dog.endUsingTool();
     }
@@ -348,14 +348,14 @@ public class Control {
      *
      * @return the int
      */
-    public int getInput(){
+    public int getInput(String index){
         //只有在1 2 4三种道具下才需要输入攻击力度
         if(this.operationNum == TOOL1 || this.operationNum == TOOL2 ||this.operationNum == TOOL4){
             Scanner scanner= new Scanner(System.in);
             System.out.println("请输入你的攻击力度（0-10的整数）");
-            String index;
             int istrength;
             while (true){
+                //执行测试时请将这行注释
                 index = scanner.nextLine();
                 if(isNumeric(index)){
                     istrength = Integer.parseInt(index);
@@ -364,10 +364,12 @@ public class Control {
                         return this.strength;
                     }else{
                         System.out.println("输入力度不在正确范围内，请重新输入");
+                        //执行测试时，请将这行的注释取消
 //                        return -1;
                     }
                 }else {
                     System.out.println("输入力度不在正确范围内，请重新输入");
+                    //执行测试时，请将这行的注释取消
 //                    return -1;
                 }
             }
@@ -381,10 +383,10 @@ public class Control {
      * 显示玩家已有道具
      * 检测记录玩家选择的道具
      * 只允许输入为范围内的合法整数.
-     *
+     * @param index 测试用，在实际代码中无意义
      * @return the int
      */
-    public int getOperationInput(){
+    public int getOperationInput(String index){
         Scanner scanner= new Scanner(System.in);
         System.out.println("请选择你的操作（输入操作前的数字）");
         System.out.println("1.不使用道具");
@@ -405,9 +407,9 @@ public class Control {
             System.out.println(num+".使用道具:"+tool.getNameCn()+"  道具数量:"+tool.getNumber());
             num++;
         }
-        String index;
         int ioperationNum;
         while (true){
+            //执行测试时请将这行注释
             index = scanner.nextLine();
             if(isNumeric(index)){
                 ioperationNum = Integer.parseInt(index);
@@ -425,11 +427,13 @@ public class Control {
                     }
                 }else{
                     System.out.println("选择道具有误");
-                    return -1;
+                    //执行测试时，请将这行的注释取消
+//                    return -1;
                 }
             }else {
                 System.out.println("选择道具有误");
-                return -1;
+                //执行测试时，请将这行的注释取消
+//                return -1;
             }
         }
     }
@@ -442,42 +446,34 @@ public class Control {
      */
     public int useTool(){
         if(this.operationNum != TOOLOPLOWBORDER){
-            Animal animal = new Animal();
+            Animal animal;
             if(this.roundOwner == 0) {
                 animal = this.cat;
-            } else if(this.roundOwner == 1) {
+            } else{
                 animal = this.dog;
-            } else {
-                return  -1;
             }
-            if(this.operationNum <= animal.getTool().size()+1){
-                String toolName = animal.getTool().get(operationNum-2).getName();
-                if(toolName.equals("poison")){
+            if(this.operationNum <= animal.getTool().size() + 1){
+                if(this.operationNum == TOOL3){
                     System.out.println(animal.getName()+animal.getTool().get(operationNum-2).getLabel());
                     //打印道具信息
                     Animal opposite = this.roundOwner==0?this.dog:this.cat;
                     //得到对手
-                    List<Tool> tools = animal.getTool();
-                    int indexTool = operationNum-2;
-                    tools.get(indexTool).setNumber(tools.get(indexTool).getNumber()-1);
-                    //使用完后移除道具
-                    animal.setTool(tools);
+                    int number = animal.getTool().get(operationNum - 2).getNumber();
+                    animal.getTool().get(operationNum - 2).setNumber(number - 1);
                     animal.attack(opposite,30);
                     //产生伤害
                     return 0;
                 }
-                else if(toolName.equals("doubleAttackTimes")){
+                else if(this.operationNum == TOOL4){
                     System.out.println(animal.getName()+animal.getTool().get(operationNum-2).getLabel());
                     //打印道具信息
-                    List<Tool> tools = animal.getTool();
-                    int indexTool = operationNum-2;
-                    tools.get(indexTool).setNumber(tools.get(indexTool).getNumber()-1);
-                    //使用完后移除道具
-                    animal.setTool(tools);
+                    int number = animal.getTool().get(operationNum - 2).getNumber();
+                    animal.getTool().get(operationNum - 2).setNumber(number - 1);
                     return 0;
                 }
                 else {
-                    return animal.useTool(operationNum);
+                    animal.useTool(this.operationNum);
+                    return 0;
                 }
             }else{
                 return -1;
@@ -492,23 +488,6 @@ public class Control {
      */
     public void changeRound(){
         this.setRoundOwner((this.roundOwner + 1) % 2);
-    }
-
-
-    /**
-     * Set input.
-     * 仅是为了测试而写的函数，在程序运行过程中无意义
-     *
-     * @param input the input
-     */
-    public void setInput(int input){
-        if(this.operation == TOOLOP){
-            this.setOperationNum(input);
-        }else if(this.operation == ATKOP){
-            this.setStrength(input);
-        }else{
-            return;
-        }
     }
 
 
