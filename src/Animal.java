@@ -181,4 +181,15 @@ public class Animal {
         this.ATK = BASE_ATK;
     }
 
+    /**
+     * Calculate tool num.
+     */
+    public int calculateToolNum(){
+        int num = 0;
+        for(Tool tool : this.getTool()){
+            num += tool.getNumber();
+        }
+        return num;
+    }
+
 }
