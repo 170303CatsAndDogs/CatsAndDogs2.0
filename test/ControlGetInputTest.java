@@ -14,14 +14,14 @@ import static org.junit.Assert.*;
  *
  */
 @RunWith(Parameterized.class)
-public class ControlTest {
-    public ControlTest controlTest;
+public class ControlGetInputTest {
+    public ControlGetInputTest controlTest;
     private int expected;
     private int operation;
     private int input;
 
 
-    public ControlTest(int expected, int operation, int input){
+    public ControlGetInputTest(int expected, int operation, int input){
         this.expected = expected;
         this.operation = operation;
         this.input = input;
@@ -53,20 +53,12 @@ public class ControlTest {
 
     @Before
     public void setUp(){
-        this.controlTest = new ControlTest(expected, operation, input);
+        this.controlTest = new ControlGetInputTest(expected, operation, input);
     }
 
     @After
     public void tearDown(){
         System.out.println("finish");
-    }
-
-    @Test
-    public void output() {
-    }
-
-    @Test
-    public void gameOver() {
     }
 
     @Test
