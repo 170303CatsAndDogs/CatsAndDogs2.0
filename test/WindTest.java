@@ -23,7 +23,7 @@ public class WindTest {
      * 测试随机生成风力和风向方法：getRandomWindStrength
      */
     @Test
-    public void getRandomWindStrengthTest() {
+    public void getRandomWindTest() {
         // 随机生成50次风力和风向测试
         for (int i = 0; i < 50; i++) {
             wind.getRandomWind();

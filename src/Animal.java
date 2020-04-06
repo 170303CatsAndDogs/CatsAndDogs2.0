@@ -52,7 +52,6 @@ public class Animal {
         this.tool.add(new Tool("poison"));
         this.tool.add(new Tool("doubleAttackTimes"));
         this.tool.add(new Tool("recover"));
-
     }
 
     /**
@@ -105,8 +104,8 @@ public class Animal {
             res = 0;
         }
         animal.setHP(res);
-        System.out.println(this.name + "攻击" + animal.name + "造成了"
-                + atk + "点伤害，" + animal.name + "剩余HP：" + animal.getHP());
+        System.out.println(this.getName() + "攻击" + animal.getName() + "造成了"
+                + atk + "点伤害，" + animal.getName() + "剩余HP：" + animal.getHP());
         return 0;
     }
 
@@ -188,7 +187,7 @@ public class Animal {
      * 道具效果结束，攻击力变为10
      */
     public void endUsingTool() {
-        this.ATK = BASE_ATK;
+        this.setATK(BASE_ATK);
     }
 
     /**
