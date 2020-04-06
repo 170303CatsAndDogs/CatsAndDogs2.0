@@ -52,15 +52,16 @@ public class Wind {
      */
     public void getRandomWind() {
         random = new Random();
-        windStrength = random.nextInt(4);
+        int strength = random.nextInt(4);
+        setWindStrength(strength);
         int dir = random.nextInt(2);
         if (dir == 0) {
-            this.direct = DIRECTIONS[0];
+            setDirect(DIRECTIONS[0]);
         }else {
-            this.direct = DIRECTIONS[1];
+            setDirect(DIRECTIONS[1]);
         }
         if (windStrength == 0) {
-            this.direct = DIRECTIONS[2];
+            setDirect(DIRECTIONS[2]);
         }
     }
 
