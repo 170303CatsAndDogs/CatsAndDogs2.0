@@ -31,7 +31,118 @@ public class ControlTestAttack {
     }
 
     @Test
-    public void tool1Attack1() {
+    public void tool1DogAttack1() {
+        control.setRoundOwner(1);
+        control.setOperationNum(1);
+        control.getWind().setWindStrength(0);
+        control.setStrength(3);
+        assertEquals(2,control.attack());
+        //fail();
+    }
+
+    @Test
+    public void tool1DogAttack2() {
+        control.setRoundOwner(1);
+        control.setOperationNum(1);
+        control.getWind().setWindStrength(0);
+        control.setStrength(7);
+        assertEquals(2,control.attack());
+        //fail();
+    }
+
+    @Test
+    public void tool1DogAttack3() {
+        control.setRoundOwner(1);
+        control.setOperationNum(1);
+        control.getWind().setWindStrength(0);
+        control.setStrength(4);
+        assertEquals(1,control.attack());
+        //fail();
+    }
+
+    @Test
+    public void tool1DogAttack4() {
+        control.setRoundOwner(1);
+        control.setOperationNum(1);
+        control.getWind().setWindStrength(0);
+        control.setStrength(5);
+        assertEquals(1,control.attack());
+        //fail();
+    }
+
+    @Test
+    public void tool1DogAttack5() {
+        control.setRoundOwner(1);
+        control.setOperationNum(1);
+        control.getWind().setWindStrength(0);
+        control.setStrength(6);
+        assertEquals(1,control.attack());
+        //fail();
+    }
+
+    @Test
+    public void tool1DogAttack6() {
+        control.setRoundOwner(1);
+        control.setOperationNum(1);
+        control.getWind().setWindStrength(1);
+        control.getWind().setDirect("顺风");
+        //击中攻击力度5-7
+        control.setStrength(4);
+        assertEquals(2,control.attack());
+        //fail();
+    }
+
+    @Test
+    public void tool1DogAttack7() {
+        control.setRoundOwner(1);
+        control.setOperationNum(1);
+        control.getWind().setWindStrength(1);
+        control.getWind().setDirect("顺风");
+        //击中攻击力度5-7
+        control.setStrength(8);
+        assertEquals(2,control.attack());
+        //fail();
+    }
+
+    @Test
+    public void tool1DogAttack8() {
+        control.setRoundOwner(1);
+        control.setOperationNum(1);
+        control.getWind().setWindStrength(1);
+        control.getWind().setDirect("顺风");
+        //击中攻击力度5-7
+        control.setStrength(5);
+        assertEquals(1,control.attack());
+        //fail();
+    }
+
+    @Test
+    public void tool1DogAttack9() {
+        control.setRoundOwner(0);
+        control.setOperationNum(1);
+        control.getWind().setWindStrength(1);
+        control.getWind().setDirect("顺风");
+        //击中攻击力度5-7
+        control.setStrength(6);
+        assertEquals(2,control.attack());
+        //fail();
+    }
+
+    @Test
+    public void tool1DogAttack10() {
+        control.setRoundOwner(0);
+        control.setOperationNum(1);
+        control.getWind().setWindStrength(1);
+        control.getWind().setDirect("顺风");
+        //击中攻击力度5-7
+        control.setStrength(7);
+        assertEquals(2,control.attack());
+        //fail();
+    }
+
+
+    @Test
+    public void tool1CatAttack1() {
         control.setRoundOwner(0);
         control.setOperationNum(1);
         control.getWind().setWindStrength(0);
@@ -41,7 +152,7 @@ public class ControlTestAttack {
     }
 
     @Test
-    public void tool1attack2() {
+    public void tool1CatAttack2() {
         control.setRoundOwner(0);
         control.setOperationNum(1);
         control.getWind().setWindStrength(0);
@@ -51,7 +162,7 @@ public class ControlTestAttack {
     }
 
     @Test
-    public void tool1attack3() {
+    public void tool1CatAttack3() {
         control.setRoundOwner(0);
         control.setOperationNum(1);
         control.getWind().setWindStrength(0);
@@ -61,7 +172,7 @@ public class ControlTestAttack {
     }
 
     @Test
-    public void tool1attack4() {
+    public void tool1CatAttack4() {
         control.setRoundOwner(0);
         control.setOperationNum(1);
         control.getWind().setWindStrength(0);
@@ -71,7 +182,7 @@ public class ControlTestAttack {
     }
 
     @Test
-    public void tool1attack5() {
+    public void tool1CatAttack5() {
         control.setRoundOwner(0);
         control.setOperationNum(1);
         control.getWind().setWindStrength(0);
@@ -81,7 +192,7 @@ public class ControlTestAttack {
     }
 
     @Test
-    public void tool1attack6() {
+    public void tool1CatAttack6() {
         control.setRoundOwner(0);
         control.setOperationNum(1);
         control.getWind().setWindStrength(1);
@@ -93,7 +204,7 @@ public class ControlTestAttack {
     }
 
     @Test
-    public void tool1attack7() {
+    public void tool1CatAttack7() {
         control.setRoundOwner(0);
         control.setOperationNum(1);
         control.getWind().setWindStrength(1);
@@ -104,8 +215,10 @@ public class ControlTestAttack {
         //fail();
     }
 
+
+
     @Test
-    public void tool1attack8() {
+    public void tool1CatAttack8() {
         control.setRoundOwner(0);
         control.setOperationNum(1);
         control.getWind().setWindStrength(1);
@@ -117,7 +230,7 @@ public class ControlTestAttack {
     }
 
     @Test
-    public void tool1attack9() {
+    public void tool1CatAttack9() {
         control.setRoundOwner(0);
         control.setOperationNum(1);
         control.getWind().setWindStrength(1);
@@ -129,7 +242,7 @@ public class ControlTestAttack {
     }
 
     @Test
-    public void tool1attack10() {
+    public void tool1CatAttack10() {
         control.setRoundOwner(0);
         control.setOperationNum(1);
         control.getWind().setWindStrength(1);
@@ -140,9 +253,8 @@ public class ControlTestAttack {
         //fail();
     }
 
-
     @Test
-    public void tool3attack1() {
+    public void tool3CatAttack1() {
         control.setRoundOwner(0);
         control.setOperationNum(3);
         control.getWind().setWindStrength(0);
@@ -152,12 +264,22 @@ public class ControlTestAttack {
     }
 
     @Test
-    public void tool3attack2() {
+    public void tool3CatAttack2() {
         control.setRoundOwner(0);
         control.setOperationNum(3);
         control.getWind().setWindStrength(0);
         control.setStrength(2);
         assertEquals(-99,control.attack());
+        //fail();
+    }
+
+    @Test
+    public void errorAttack() {
+        control.setRoundOwner(3);
+        control.setOperationNum(1);
+        control.getWind().setWindStrength(0);
+        control.setStrength(2);
+        assertEquals(-1,control.attack());
         //fail();
     }
 
