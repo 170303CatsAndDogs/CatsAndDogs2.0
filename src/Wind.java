@@ -2,6 +2,7 @@ import java.util.Random;
 
 /**
  * 风类
+ * @author casdg
  */
 public class Wind {
 
