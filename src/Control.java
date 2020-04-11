@@ -144,28 +144,8 @@ public class Control {
         return roundOwner;
     }
 
-    public int getRound() {
-        return round;
-    }
-
-    public void setRound(int round) {
-        this.round = round;
-    }
-
-    public void setOperation(int operation) {
-        this.operation = operation;
-    }
-
     public void setOperationNum(int operationNum) {
         this.operationNum = operationNum;
-    }
-
-    public boolean getOver() {
-        return over;
-    }
-
-    public void setOver(boolean over) {
-        this.over = over;
     }
 
     public int getStrength() {
@@ -225,8 +205,8 @@ public class Control {
      */
     public void play(){
         while (!this.over){
-            System.out.println("ROUND  " + this.getRound());
-            this.setRound(this.getRound()+1);
+            System.out.println("ROUND  " + this.round);
+            this.round = this.round+1;
             this.wind.getRandomWind();
             this.whoGoesFirstJudge();
             this.output();
@@ -360,7 +340,7 @@ public class Control {
             int istrength;
             while (true){
                 //执行测试时请将这行注释
-                index = scanner.nextLine();
+//                index = scanner.nextLine();
                 if(isNumeric(index)){
                     istrength = Integer.parseInt(index);
                     if(istrength <= MAXSTRENGTH && istrength >= MINSTRENGTH){
@@ -369,12 +349,12 @@ public class Control {
                     }else{
                         System.out.println("输入力度不在正确范围内，请重新输入");
                         //执行测试时，请将这行的注释取消
-//                        return -1;
+                        return -1;
                     }
                 }else {
                     System.out.println("输入力度不在正确范围内，请重新输入");
                     //执行测试时，请将这行的注释取消
-//                    return -1;
+                    return -1;
                 }
             }
         }else{
@@ -414,7 +394,7 @@ public class Control {
         int ioperationNum;
         while (true){
             //执行测试时请将这行注释
-            index = scanner.nextLine();
+//            index = scanner.nextLine();
             if(isNumeric(index)){
                 ioperationNum = Integer.parseInt(index);
                 if(ioperationNum <= TOOLOPHIGHBORDER && ioperationNum >= TOOLOPLOWBORDER){
@@ -432,12 +412,12 @@ public class Control {
                 }else{
                     System.out.println("选择道具有误");
                     //执行测试时，请将这行的注释取消
-//                    return -1;
+                    return -1;
                 }
             }else {
                 System.out.println("选择道具有误");
                 //执行测试时，请将这行的注释取消
-//                return -1;
+                return -1;
             }
         }
     }

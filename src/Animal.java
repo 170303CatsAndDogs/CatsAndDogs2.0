@@ -77,17 +77,10 @@ public class Animal {
         return tool;
     }
 
-    public void setTool(List<Tool> tool) {
-        this.tool = tool;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     /**
      * 动物攻击
