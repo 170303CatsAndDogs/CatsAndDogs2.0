@@ -22,14 +22,15 @@ public class AnimalRandomToolGetTest {
 
 
     /**
-     * 测试随机获得工具方法：RandomToolGet
+     * 测试随机获得工具方法：randomToolGet
      */
     @Test
-    public void AnimalRandomToolGetTest() {
+    public void randomToolGetTest() {
         // 随机生成50次测试
         for (int i = 0; i < 50; i++) {
             animal.randomToolGet();
-            }
+            assertTrue(0 == animal.randomToolGet() || 1 == animal.randomToolGet());
+        }
     }
 
 
