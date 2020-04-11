@@ -19,7 +19,9 @@ public class ControlWhoGoesFirstJudgeTest {
     @Test
     public void whoGoesFirstJudgeTest(){
 //        fail();
-        control.whoGoesFirstJudge();
-        assertTrue(0 == control.getRoundOwner() || 1 == control.getRoundOwner());
+        for (int i = 0; i < 50; i++) {
+            control.whoGoesFirstJudge();
+            assertTrue(0 == control.getRoundOwner() || 1 == control.getRoundOwner());
+        }
     }
 }
