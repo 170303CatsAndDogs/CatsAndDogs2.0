@@ -118,25 +118,25 @@ public class ControlTestAttack {
 
     @Test
     public void tool1DogAttack9() {
-        control.setRoundOwner(0);
+        control.setRoundOwner(1);
         control.setOperationNum(1);
         control.getWind().setWindStrength(1);
         control.getWind().setDirect("顺风");
         //击中攻击力度5-7
         control.setStrength(6);
-        assertEquals(2,control.attack());
+        assertEquals(1,control.attack());
         //fail();
     }
 
     @Test
     public void tool1DogAttack10() {
-        control.setRoundOwner(0);
+        control.setRoundOwner(1);
         control.setOperationNum(1);
         control.getWind().setWindStrength(1);
         control.getWind().setDirect("顺风");
         //击中攻击力度5-7
         control.setStrength(7);
-        assertEquals(2,control.attack());
+        assertEquals(1,control.attack());
         //fail();
     }
 
